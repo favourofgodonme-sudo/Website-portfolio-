@@ -1,0 +1,466 @@
+@font-face {
+font-family: "Europa Grotesk";
+src: url("https://assets.codepen.io/3/europa-grotesk-sh-bold.woff2")
+format("woff2");
+}
+
+@property --captured-length {
+syntax: "<length>";
+initial-value: 0px;
+inherits: true;
+}
+
+@property --captured-length2 {
+syntax: "<length>";
+initial-value: 0px;
+inherits: true;
+}
+
+html {
+color-scheme: dark light;
+background: Canvas;
+color: CanvasText;
+font:
+100%/1.4 system-ui,
+sans-serif;
+}
+
+@scope (body) to (.content) {
+a {
+text-decoration: none;
+}
+}
+
+html {
+scroll-timeline: --reveal-final block;
+}
+
+body {
+margin: 0;
+}
+
+.page-wrap {
+/* make sure to cover the screen */
+min-height: 100vh;
+
+/* put on top */
+position: relative;
+z-index: 1;
+}
+
+img {
+max-width: 100%;
+}
+
+h1 {
+font-family: "Europa Grotesk";
+font-size: calc(1rem + 6.5vi);
+text-align: center;
+}
+h2 {
+font-family: "Europa Grotesk";
+font-size: calc(1rem + 4.5vi);
+text-align: center;
+}
+
+.site-header {
+display: flex;
+justify-content: end;
+padding: 0.5rem;
+gap: 0.5rem;
+border-block-end: 1px solid light-dark(#eee, #333);
+
+svg {
+display: block;
+fill: light-dark(black, white);
+width: 1.4rem;
+aspect-ratio: 1;
+}
+}
+
+.intro {
+text-align: center;
+
+p {
+margin-inline: auto;
+}
+}
+
+.social-link {
+&:hover,
+&:focus {
+border-radius: 3px;
+outline-offset: 2px;
+outline: 1px solid light-dark(black, white);
+}
+}
+.social-link-bluesky {
+&:hover,
+&:focus {
+svg {
+fill: oklch(63% 51% 256deg);
+}
+}
+}
+.social-link-mastodon {
+&:hover,
+&:focus {
+svg {
+fill: oklch(59% 56% 277deg);
+}
+}
+}
+
+.name {
+text-transform: uppercase;
+font-weight: bold;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 90%;
+padding-block-start: 3rem;
+
+img {
+width: 2.5rem;
+aspect-ratio: 1;
+object-fit: cover;
+object-position: top -2px right -3px;
+clip-path: shape(
+from 86.19% 34.52%,
+curve to 85.55% 64.95% with 85.47% 50%,
+curve to 71.95% 88.41% with 85.64% 79.9%,
+curve to 44.47% 90.2% with 58.27% 96.91%,
+curve to 19.07% 74.48% with 30.67% 83.48%,
+curve to 11.66% 51.53% with 7.47% 65.48%,
+curve to 23.88% 28.11% with 15.85% 37.57%,
+curve to 44.55% 13.93% with 31.9% 18.66%,
+curve to 72.05% 14.12% with 57.19% 9.21%,
+curve to 86.19% 34.52% with 86.9% 19.03%
+);
+}
+}
+
+.wrapper {
+padding-inline: 1rem;
+max-inline-size: 1000px;
+margin-inline: auto;
+}
+
+.actions {
+display: flex;
+justify-content: center;
+gap: 1rem;
+padding-block: 3rem 8rem;
+}
+
+.button {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+text-decoration: none;
+border-radius: 999px;
+padding: 0.75rem 1rem;
+
+svg {
+border: 1px solid var(--mainColor);
+border-radius: 999px;
+aspect-ratio: 1;
+fill: light-dark(black, white);
+inline-size: 1.2rem;
+}
+
+/* Is omitting focus styles fine because we can count on browser focus styles? */
+&:hover {
+outline: 1px solid light-dark(black, white);
+outline-offset: 2px;
+}
+}
+.button-invis {
+color: light-dark(black, white);
+}
+.button-filled {
+background: light-dark(black, white);
+color: light-dark(white, black);
+
+/*
+Safari shipped this. Could use someday!
+@supports (color: contrast-color(purple)) {
+color: constrast-color(var(--mainColor));
+}
+*/
+}
+
+.images {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+
+img {
+display: block;
+object-fit: cover;
+block-size: 400px;
+
+&:nth-child(1) {  
+  max-inline-size: 300px;  
+  aspect-ratio: 1/2;  
+  object-position: top 0 right -250px;  
+}  
+&:nth-child(2) {  
+  aspect-ratio: 16/9;  
+}  
+&:nth-child(3) {  
+}
+
+}
+}
+
+.carousel {
+--gap: 1rem;
+
+display: grid;
+grid-auto-flow: column;
+grid-auto-columns: 350px;
+gap: var(--gap);
+padding-block-end: var(--gap);
+overflow-x: auto;
+scroll-behavior: smooth;
+overscroll-behavior-x: contain;
+scroll-snap-type: x mandatory;
+anchor-name: --carousel;
+margin-block-end: 8rem;
+scrollbar-color: light-dark(#ccc, oklch(53% 0% 68deg)) transparent;
+
+> img {
+scroll-snap-align: center;
+height: 200px;
+width: auto;
+aspect-ratio: 16 / 9;
+object-fit: cover;
+
+
+
+/* This was just an experiment to see if @starting-style would apply to lazy loaded media, but it doesn't appear to in Chrome at least. */  
+/* transition: 2s;  
+opacity: 1;  
+
+@starting-style {  
+  opacity: 0;  
+} */
+
+}
+}
+
+.carousel--scroll-buttons::scroll-button(*):hover {
+outline: 3px solid white;
+outline-offset: 3px;
+}
+
+.carousel--scroll-buttons {
+--inset-x: 60px;
+--nudge-y: -16px;
+
+&::scroll-button(*) {
+position: fixed;
+position-anchor: --carousel;
+border: 0;
+padding: 0;
+font-size: 30px;
+background: none;
+height: 3rem;
+aspect-ratio: 1;
+background: white;
+border-radius: 50%;
+display: grid;
+place-items: center;
+}
+
+&::scroll-button(right) {
+position-area: inline-end center;
+/* TODO: test accessible name when no content */
+content: "" / "Next";
+
+background-image: url('data:image/svg+xml,<svg viewBox="0 0 256 512" width="100" title="angle-right" xmlns="http://www.w3.org/2000/svg"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" /></svg>');
+background-size: contain;  
+background-repeat: no-repeat;  
+background-position: top left 15px;  
+translate: calc(-1 * var(--inset-x)) var(--nudge-y);
+
+}
+
+&::scroll-button(left) {
+position-area: inline-start center;
+background-image: url('data:image/svg+xml,<svg viewBox="0 0 256 512" width="100" title="angle-left" xmlns="http://www.w3.org/2000/svg"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z" /></svg>');
+background-position: top left 10px;
+background-size: contain;
+background-repeat: no-repeat;
+content: "" / "Previous";
+translate: var(--inset-x) var(--nudge-y);
+}
+}
+
+img[data-loaded] {
+transition: opacity 1s;
+}
+img[data-loaded="false"] {
+opacity: 0.01; /* Just faded enough to still trigger visibility */
+}
+
+.design-work {
+margin-block-end: 10rem;
+
+> article {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+}
+}
+
+.txt {
+font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+font-size: 1.33rem;
+}
+
+.site-footer {
+display: grid;
+grid-template-columns: 3fr 1fr 2fr;
+gap: 1rem;
+background-color: light-dark(black, white);
+color: light-dark(lch(60% 0 0), lch(50% 0 0));
+padding-block: 3rem;
+
+@media (width < 500px) {
+grid-template-columns: 1fr 1fr;
+
+.footer-text {  
+  grid-column: span 2;  
+}
+
+}
+
+strong,
+h4 {
+color: light-dark(white, black);
+}
+
+a {
+color: inherit;
+}
+
+ul {
+li {
+a {
+display: block;
+padding-block: 0.25rem;
+}
+}
+}
+}
+
+.footer-text {
+display: flex;
+flex-direction: column;
+
+> :nth-child(2) {
+font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+font-size: 90%;
+}
+
+:last-child {
+margin-block-start: auto;
+margin-block-end: 0;
+/* would prefer to do with margin-trim */
+}
+}
+
+.content {
+p {
+max-inline-size: 60ch;
+text-wrap: balance;
+}
+
+h1 {
+margin: 0;
+line-height: 1;
+}
+}
+
+@keyframes reveal-final {
+20% {
+opacity: 0;
+}
+to {
+opacity: 1;
+}
+}
+
+.final {
+position: sticky;
+bottom: 0;
+left: 0;
+width: 100%;
+opacity: 0;
+
+padding: 5rem 0;
+
+animation: reveal-final;
+animation-timeline: --reveal-final;
+}
+
+.text-fit {
+display: flex;
+container-type: inline-size;
+
+--captured-length: initial;
+--support-sentinel: var(--captured-length, 9999px);
+
+& > [aria-hidden] {
+visibility: hidden;
+}
+
+& > :not([aria-hidden]) {
+flex-grow: 1;
+container-type: inline-size;
+
+--captured-length: 100cqi;  
+--available-space: var(--captured-length);  
+
+& > * {  
+  --support-sentinel: inherit;  
+  --captured-length: 100cqi;  
+  --ratio: tan(  
+    atan2(  
+      var(--available-space),  
+      var(--available-space) - var(--captured-length)  
+    )  
+  );  
+  --font-size: clamp(  
+    1em,  
+    1em * var(--ratio),  
+    var(--max-font-size, infinity * 1px) - var(--support-sentinel)  
+  );  
+  inline-size: var(--available-space);  
+
+  &:not(.text-fit) {  
+    display: block;  
+    font-size: var(--font-size);  
+
+    @container (inline-size > 0) {  
+      white-space: nowrap;  
+    }  
+  }  
+}
+
+}
+}
+
+@scope (body) to (.content) {
+a {
+text-decoration: none;
+}
+
+ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+}
